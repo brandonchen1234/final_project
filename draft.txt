@@ -1,0 +1,13 @@
+Blocks:
+2x2 Grid: O Block --> Base Block, 1 Position
+3x3 Grid: J Block, L Block, S Block, T Block, Z Block --> Complex Block, 4 Positions
+4x4 Grid: I Block --> Complex Block, 4 Positions, Pivots on 2nd Block
+
+Base Grid --> Break it down into 10 x 20 Grid + 10 x 4 Vanish Zone --> Object Creation
+
+
+Movement:
+Control One Object At A Time --> No Object Overlap --> Base it off the grid
+
+Game Status + Score Tracker:
+nextAction() --> When an object is "placed", check to see if the vanish zone has anything, end game if true, else create new block.
