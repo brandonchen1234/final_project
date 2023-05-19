@@ -2,12 +2,30 @@ Blocks:
 2x2 Grid: O Block --> Base Block, 1 Position
 3x3 Grid: J Block, L Block, S Block, T Block, Z Block --> Complex Block, 4 Positions
 4x4 Grid: I Block --> Complex Block, 4 Positions, Pivots on 2nd Block
+  Use Left and Right Keys to move the block left to right
+  Use Up Key to change position
+  Create
 
 Base Grid --> Break it down into 10 x 20 Grid + 10 x 4 Vanish Zone --> Object Creation
+  Size = Two 500 x 1200 --> size(1100, 1200) Gives us two grids split by 100 square (Could reduce to 50)
+  int size = 50; // snake and food square size
+  int w, h; // how many snakes can be allocated --> (Width or Height) / Size --> Simplified Coding
+  int spd = 4; 
+  
 
 
 Movement:
 Control One Object At A Time --> No Object Overlap --> Base it off the grid
+  W A S D --> Grid 1
+  Arrow Keys --> Grid 2
 
 Game Status + Score Tracker:
 nextAction() --> When an object is "placed", check to see if the vanish zone has anything, end game if true, else create new block.
+blockDrop() --> The current block "slowly" drops
+    if(frameCount % spd == 0) {
+      // If the row below the current block isn't all 0, call nextAction(); 
+  }
+  if down key is pressed --> spd = 1 until key is let go of
+  if spacebar is pressed --> Hard Drop
+rowClear() --> If any row of the grid is all 1, turn it all into 0 and bring down all rows
+  Create a time-effective rowClear() is necessary for smooth running of thegame
