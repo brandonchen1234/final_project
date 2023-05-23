@@ -1,16 +1,20 @@
 public class Blocks{
   //attritubes
   color c; 
-  PVector[] positions;
-  int gridType;
+  PVector[][] positions;
+  PVector[] currentPosition;
+  int positionIndex;
   
-  public Blocks(color c, PVector[] positions, int gridType){
+  public Blocks(color c, PVector[][] positions){
     this.c = c; 
     this.positions = positions; 
-    this.gridType = gridType; 
+    currentPosition = positions[0];
+    positionIndex = 0;
   }
   
-  public void Rotate(){
-    
+  public void Rotate(Blocks block){
+    currentPosition = positions[positionIndex++];
+    if (positionIndex > 3)
+      positionIndex = 0;
   }
 }
