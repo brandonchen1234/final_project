@@ -17,4 +17,16 @@ public class Blocks{
     if (positionIndex > 3)
       positionIndex = 0;
   }
+  
+  public void Left(){
+    for (PVector[] position: positions)
+      for (PVector pos: positions)
+        pos.x -= size;
+  }
+  
+  public void Right(){
+    for (PVector[] position: positions)
+      for (PVector pos: positions)
+        pos.x -= size;
+  }
 }
