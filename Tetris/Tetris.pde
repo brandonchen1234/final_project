@@ -7,15 +7,24 @@ int x = 0;
 int y = 0;
 
 //square
-PVector[][] positions = { {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}, 
+PVector[][] OPositions = { {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}, 
                           {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)},
                           {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)},
                           {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}
                         };
-Blocks squareBlock = new Blocks(color(255,255,0), positions);
+Blocks squareBlock = new Blocks(color(255,255,0), OPositions);
+
+//L block
+PVector[][] Lpositions = { {new PVector(x, y - size), new PVector(x, y - 2 * size), new PVector(x, y), new PVector(x + size, y)}, 
+                          {new PVector(x, y), new PVector(x + size, y), new PVector(x + 2 * size, y), new PVector(x, y + size)},
+                          {new PVector(x, y + size), new PVector(x, y + 2 * size), new PVector(x, y), new PVector(x - size, y)},
+                          {new PVector(x, y), new PVector(x - size, y), new PVector(x - 2* size, y), new PVector(x, y - size)}
+                        };
+                        
+Blocks LBlock = new Blocks(color(255,127,0), Lpositions);
 
 void setup() {
- size (1200,880);
+ size (1200,960);
  background(255);
  fill(0);
  textSize(52);
@@ -30,23 +39,22 @@ void setup() {
    MultiplayerGrid();
  }
  
- currentBlock = squareBlock;
+ currentBlock = LBlock;
 }
 
 void draw() {
   if (isGameRunning == true){
-   
-    for (PVector[] position: currentBlock.getPositions()){
-      for (PVector pos: position){
+    SinglePlayerGrid();
+    
+    for (PVector position: currentBlock.getPositions()){
         fill(currentBlock.getColor());
-        square(pos.x, pos.y, 40);
-      }
+        square(position.x, position.y, 40);
     }
     
-    if (frameCount % 60 == 0)
+    if (frameCount % 90 == 0)
       currentBlock.Down();
+    
   }
-  
 }
 
 

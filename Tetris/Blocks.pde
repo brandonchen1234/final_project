@@ -12,8 +12,8 @@ public class Blocks{
     positionIndex = 0;
   }
   
-  public PVector[][] getPositions(){
-    return positions;
+  public PVector[] getPositions(){
+    return currentPosition;
   }
   
   public color getColor(){
