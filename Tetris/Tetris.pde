@@ -1,5 +1,18 @@
 //attributes 
 int mode = 0; 
+boolean isGameRunning = false;
+Blocks currentBlock;
+int size = 40; 
+int x = 0;
+int y = 0;
+
+//square
+PVector[][] positions = { {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}, 
+                          {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)},
+                          {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)},
+                          {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}
+                        };
+Blocks squareBlock = new Blocks(color(255,255,0), positions);
 
 void setup() {
  size (1200,880);
@@ -17,9 +30,22 @@ void setup() {
    MultiplayerGrid();
  }
  
+ currentBlock = squareBlock;
 }
 
 void draw() {
+  if (isGameRunning == true){
+   
+    for (PVector[] position: currentBlock.getPositions()){
+      for (PVector pos: position){
+        fill(currentBlock.getColor());
+        square(pos.x, pos.y, 40);
+      }
+    }
+    
+    if (frameCount % 60 == 0)
+      currentBlock.Down();
+  }
   
 }
 
@@ -80,17 +106,32 @@ void MultiplayerGrid() {
 }
 
 void keyPressed(){
-  if (key == '1'){
+  if (key == '1' && isGameRunning == false){
     mode = 1; 
+    isGameRunning = true;
     setup();
   }
-  if (key == '2'){
+  if (key == '2' && isGameRunning == false){
     mode = 2; 
+    isGameRunning = true;
     setup();
+  }
+  if (key == 'w' || key == 'W' && isGameRunning == true){
+    currentBlock.Rotate();
+  }
+  if (key == 'd' || key == 'D' && isGameRunning == true){
+    currentBlock.Right();
+  }
+  if (key == 'a' || key == 'A' && isGameRunning == true){
+    currentBlock.Left();
+  }
+  if (key == 's' || key == 'S' && isGameRunning == true){
+    currentBlock.Down();
   }
 }
 
 void reset(){
   mode = 0;
+  isGameRunning = false; 
   setup();
 }

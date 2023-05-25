@@ -12,21 +12,41 @@ public class Blocks{
     positionIndex = 0;
   }
   
-  public void Rotate(Blocks block){
+  public PVector[][] getPositions(){
+    return positions;
+  }
+  
+  public color getColor(){
+    return c;
+  }
+  
+  public void Rotate(){
     currentPosition = positions[positionIndex++];
     if (positionIndex > 3)
       positionIndex = 0;
   }
   
   public void Left(){
-    for (PVector[] position: positions)
-      for (PVector pos: positions)
-        pos.x -= size;
+    for (int i = 0; i < positions.length; i++){
+      for (int f = 0; f < positions[i].length; f++){
+        positions[i][f].x -= 40;
+      }
+    }
   }
   
   public void Right(){
-    for (PVector[] position: positions)
-      for (PVector pos: positions)
-        pos.x -= size;
+    for (int i = 0; i < positions.length; i++){
+      for (int f = 0; f < positions[i].length; f++){
+        positions[i][f].x += 40;
+      }
+    }
+  }
+  
+  public void Down(){
+    for (int i = 0; i < positions.length; i++){
+      for (int f = 0; f < positions[i].length; f++){
+        positions[i][f].y += 40;
+      }
+    }
   }
 }
