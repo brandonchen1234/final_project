@@ -15,10 +15,10 @@ PVector[][] OPositions = { {new PVector(x, y), new PVector(x + size, y), new PVe
 Blocks squareBlock = new Blocks(color(255,255,0), OPositions);
 
 //L block
-PVector[][] Lpositions = { {new PVector(x, y - size), new PVector(x, y - 2 * size), new PVector(x, y), new PVector(x + size, y)}, 
-                          {new PVector(x, y), new PVector(x + size, y), new PVector(x + 2 * size, y), new PVector(x, y + size)},
-                          {new PVector(x, y + size), new PVector(x, y + 2 * size), new PVector(x, y), new PVector(x - size, y)},
-                          {new PVector(x, y), new PVector(x - size, y), new PVector(x - 2* size, y), new PVector(x, y - size)}
+PVector[][] Lpositions = { {new PVector(x - size, y), new PVector(x, y), new PVector(x + size, y), new PVector(x + size, y - size)}, 
+                          {new PVector(x, y - size), new PVector(x, y), new PVector(x, y + size), new PVector(x + size, y + size)},
+                          {new PVector(x - size, y + size), new PVector(x - size, y), new PVector(x, y), new PVector(x + size, y)},
+                          {new PVector(x - size, y - size), new PVector(x, y - size), new PVector(x, y), new PVector(x, y + size)}
                         };
                         
 Blocks LBlock = new Blocks(color(255,127,0), Lpositions);
