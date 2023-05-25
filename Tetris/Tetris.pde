@@ -26,9 +26,10 @@ Blocks LBlock = new Blocks(color(255,127,0), Lpositions);
 //J block
 PVector[][] Jpositions = { {new PVector(x - size, y), new PVector(x, y), new PVector(x + size, y), new PVector(x - size, y - size)}, 
                           {new PVector(x, y - size), new PVector(x, y), new PVector(x, y + size), new PVector(x + size, y - size)},
-                          {new PVector(x - size, y  size), new PVector(x - size, y), new PVector(x, y), new PVector(x + size, y)},
-                          {new PVector(x - size, y - size), new PVector(x, y - size), new PVector(x, y), new PVector(x, y + size)}
+                          {new PVector(x - size, y), new PVector(x + size, y + size), new PVector(x, y), new PVector(x + size, y)},
+                          {new PVector(x - size, y + size), new PVector(x, y - size), new PVector(x, y), new PVector(x, y + size)}
                         };
+Blocks JBlock = new Blocks(color(0,0,255), Jpositions);
 
 void setup() {
  size (1200,960);
@@ -46,7 +47,7 @@ void setup() {
    MultiplayerGrid();
  }
  
- currentBlock = LBlock;
+ currentBlock = JBlock;
 }
 
 void draw() {
@@ -58,9 +59,7 @@ void draw() {
         square(position.x, position.y, 40);
     }
     
-    if (frameCount % 90 == 0)
-      currentBlock.Down();
-    
+
   }
 }
 
