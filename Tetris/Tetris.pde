@@ -31,6 +31,22 @@ PVector[][] Jpositions = { {new PVector(x - size, y), new PVector(x, y), new PVe
                         };
 Blocks JBlock = new Blocks(color(0,0,255), Jpositions);
 
+//S block
+PVector[][] Spositions = { {new PVector(x + size, y), new PVector(x, y), new PVector(x, y + size), new PVector(x - size, y + size)}, 
+                          {new PVector(x, y - size), new PVector(x, y), new PVector(x + size, y + size), new PVector(x + size, y)},
+                          {new PVector(x + size, y - size), new PVector(x, y - size), new PVector(x, y), new PVector(x - size, y)},
+                          {new PVector(x - size, y - size), new PVector(x - size, y), new PVector(x, y + size), new PVector(x , y)}
+                        };
+Blocks SBlock = new Blocks(color(0,255,0), Spositions);
+                        
+//Z block
+PVector[][] Zpositions = { {new PVector(x + size, y), new PVector(x, y), new PVector(x, y - size), new PVector(x - size, y - size)}, 
+                          {new PVector(x, y + size), new PVector(x, y), new PVector(x + size, y - size), new PVector(x + size, y)},
+                          {new PVector(x + size, y + size), new PVector(x, y + size), new PVector(x, y), new PVector(x - size, y)},
+                          {new PVector(x - size, y + size), new PVector(x - size, y), new PVector(x, y - size), new PVector(x , y)}
+                        };  
+Blocks ZBlock = new Blocks(color(255,0,0), Zpositions);
+
 void setup() {
  size (1200,960);
  background(255);
