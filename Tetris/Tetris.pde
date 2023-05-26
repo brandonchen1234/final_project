@@ -63,6 +63,9 @@ PVector[][] Tpositions = { {new PVector(x - size, y), new PVector(x, y), new PVe
                         };
 Blocks TBlock = new Blocks(color(128,0,128), Tpositions);
 
+//create an array of blocks
+Blocks[] blocks = {OBlock, LBlock, JBlock, SBlock, ZBlock, IBlock, TBlock};
+
 void setup() {
  size (1200,960);
  background(255);
@@ -79,7 +82,7 @@ void setup() {
    MultiplayerGrid();
  }
  
- currentBlock = JBlock;
+ currentBlock = blocks[(int)random(0, 7)];
 }
 
 void draw() {
@@ -91,7 +94,8 @@ void draw() {
         square(position.x, position.y, 40);
     }
     
-
+   if (frameCount % 90 == 0)
+     currentBlock.Down();    
   }
 }
 
