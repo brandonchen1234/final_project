@@ -12,7 +12,7 @@ PVector[][] OPositions = { {new PVector(x, y), new PVector(x + size, y), new PVe
                           {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)},
                           {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}
                         };
-Blocks squareBlock = new Blocks(color(255,255,0), OPositions);
+Blocks OBlock = new Blocks(color(255,255,0), OPositions);
 
 //L block
 PVector[][] Lpositions = { {new PVector(x - size, y), new PVector(x, y), new PVector(x + size, y), new PVector(x + size, y - size)}, 
