@@ -185,3 +185,9 @@ void reset(){
   isGameRunning = false; 
   setup();
 }
+
+void vanishZone() {
+  fill(255);
+  noStroke();
+  rect (x, y, width, 4 * size);
+}
