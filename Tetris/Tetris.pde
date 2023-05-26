@@ -47,6 +47,22 @@ PVector[][] Zpositions = { {new PVector(x + size, y), new PVector(x, y), new PVe
                         };  
 Blocks ZBlock = new Blocks(color(255,0,0), Zpositions);
 
+//I block
+PVector[][] Ipositions = { {new PVector(x - 2 * size, y - size), new PVector(x - size, y - size), new PVector(x, y - size), new PVector(x + size, y - size)}, 
+                          {new PVector(x, y - 2 * size), new PVector(x, y - size), new PVector(x, y), new PVector(x, y + size)},
+                          {new PVector(x - 2 * size, y), new PVector(x - size, y), new PVector(x, y), new PVector(x + size, y)},
+                          {new PVector(x - size, y - 2 * size), new PVector(x - size, y - size), new PVector(x - size, y), new PVector(x - size, y + size)}
+                        };
+Blocks IBlock = new Blocks(color(0,255,255), Ipositions);
+
+//T block
+PVector[][] Tpositions = { {new PVector(x - size, y), new PVector(x, y), new PVector(x + size, y), new PVector(x, y - size)}, 
+                          {new PVector(x, y - size), new PVector(x, y), new PVector(x, y + size), new PVector(x + size, y)},
+                          {new PVector(x, y + size), new PVector(x - size, y), new PVector(x, y), new PVector(x + size, y)},
+                          {new PVector(x - size, y), new PVector(x, y - size), new PVector(x, y), new PVector(x, y + size)}
+                        };
+Blocks TBlock = new Blocks(color(128,0,128), Tpositions);
+
 void setup() {
  size (1200,960);
  background(255);
