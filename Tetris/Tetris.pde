@@ -2,6 +2,7 @@
 int mode = 0; 
 boolean isGameRunning = false;
 Blocks currentBlock;
+Blocks currentBlock2;
 int size = 40; 
 int x = 0;
 int y = 0;
@@ -80,6 +81,7 @@ void setup() {
  
  if (mode == 2){
    MultiplayerGrid();
+   currentBlock2 = blocks[(int)random(0, 7)];
  }
  
  currentBlock = blocks[(int)random(0, 7)];
@@ -87,15 +89,36 @@ void setup() {
 
 void draw() {
   if (isGameRunning == true){
-    SinglePlayerGrid();
+    if (mode == 1)
+      SinglePlayerGrid();
     
-    for (PVector position: currentBlock.getPositions()){
-        fill(currentBlock.getColor());
-        square(position.x, position.y, 40);
+    if (mode == 2){
+      MultiplayerGrid();
     }
     
-   if (frameCount % 90 == 0)
+    if (mode == 1){
+      for (PVector position: currentBlock.getPositions()){
+          fill(currentBlock.getColor());
+          square(position.x + 600, position.y + 80, 40);
+      }
+    }
+    
+    if (mode == 2){
+      for (PVector position: currentBlock.getPositions()){
+          fill(currentBlock.getColor());
+          square(position.x + 160, position.y + 80, 40);
+      }
+      for (PVector position: currentBlock2.getPositions()){
+        fill(currentBlock2.getColor());
+        square(position.x + 960, position.y + 80, 40);
+      }
+    }
+    
+    if (frameCount % 90 == 0){
      currentBlock.Down();    
+     if (mode == 2)
+       currentBlock2.Down();
+    }
   }
 }
 
@@ -178,16 +201,25 @@ void keyPressed(){
   if (key == 's' || key == 'S' && isGameRunning == true){
     currentBlock.Down();
   }
+  
+  if (mode == 2){
+    if (keyCode == UP && isGameRunning == true){
+      currentBlock2.Rotate();
+    }
+    if (keyCode == RIGHT && isGameRunning == true){
+      currentBlock2.Right();
+    }
+    if (keyCode == LEFT && isGameRunning == true){
+      currentBlock2.Left();
+    }
+    if (keyCode == DOWN && isGameRunning == true){
+      currentBlock2.Down();
+    }
+  }
 }
 
 void reset(){
   mode = 0;
   isGameRunning = false; 
   setup();
-}
-
-void vanishZone() {
-  fill(255);
-  noStroke();
-  rect (x, y, width, 4 * size);
 }
