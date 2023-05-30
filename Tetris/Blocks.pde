@@ -1,9 +1,9 @@
 public class Blocks{
   //attritubes
-  color c; 
-  PVector[][] positions;
-  PVector[] currentPosition;
-  int positionIndex;
+  private color c; 
+  private PVector[][] positions;
+  private PVector[] currentPosition;
+  private int positionIndex;
   
   public Blocks(color c, PVector[][] positions){
     this.c = c; 
@@ -12,21 +12,21 @@ public class Blocks{
     positionIndex = 0;
   }
   
-  public PVector[] getPositions(){
+  private PVector[] getPositions(){
     return currentPosition;
   }
   
-  public color getColor(){
+  private color getColor(){
     return c;
   }
   
-  public void Rotate(){
+  private void Rotate(){
     currentPosition = positions[positionIndex++];
     if (positionIndex > 3)
       positionIndex = 0;
   }
   
-  public void Left(){
+  private void Left(){
     for (int i = 0; i < positions.length; i++){
       for (int f = 0; f < positions[i].length; f++){
         positions[i][f].x -= 40;
@@ -34,7 +34,7 @@ public class Blocks{
     }
   }
   
-  public void Right(){
+  private void Right(){
     for (int i = 0; i < positions.length; i++){
       for (int f = 0; f < positions[i].length; f++){
         positions[i][f].x += 40;
@@ -42,7 +42,7 @@ public class Blocks{
     }
   }
   
-  public void Down(){
+  private void Down(){
     for (int i = 0; i < positions.length; i++){
       for (int f = 0; f < positions[i].length; f++){
         positions[i][f].y += 40;

@@ -1,11 +1,11 @@
 //attributes 
-int mode = 0; 
-boolean isGameRunning = false;
-Blocks currentBlock;
-Blocks currentBlock2;
-int size = 40; 
-int x = 0;
-int y = 0;
+private int mode = 0; 
+private boolean isGameRunning = false;
+private Blocks currentBlock;
+private Blocks currentBlock2;
+private int size = 40; 
+private int x = 0;
+private int y = 0;
 
 //square
 PVector[][] OPositions = { {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}, 
@@ -125,7 +125,7 @@ void draw() {
 
 //temporary method for debugging
 
-void SinglePlayerGrid() {
+private void SinglePlayerGrid() {
   int x = 0;
   int y = 0;
   int size = 40; 
@@ -144,7 +144,7 @@ void SinglePlayerGrid() {
   }
 }
 
-void MultiplayerGrid() {
+private void MultiplayerGrid() {
   int x = 0;
   int y = 0;
   int size = 40; 
@@ -184,11 +184,13 @@ void keyPressed(){
     isGameRunning = true;
     setup();
   }
+  
   if (key == '2' && isGameRunning == false){
     mode = 2; 
     isGameRunning = true;
     setup();
   }
+  
   if (key == 'w' || key == 'W' && isGameRunning == true){
     currentBlock.Rotate();
   }
@@ -218,7 +220,7 @@ void keyPressed(){
   }
 }
 
-void reset(){
+private void reset(){
   mode = 0;
   isGameRunning = false; 
   setup();
