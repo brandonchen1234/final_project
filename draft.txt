@@ -29,3 +29,9 @@ blockDrop() --> The current block "slowly" drops
   if spacebar is pressed --> Hard Drop
 rowClear() --> If any row of the grid is all 1, turn it all into 0 and bring down all rows
   Create a time-effective rowClear() is necessary for smooth running of thegame
+
+Multiplayer Vs. Single Player:
+Standard mode is single player. 
+If keyPressed() == "m" --> change modes 
+Separate class for Multiplayer, in which we will use the main tetris class methods to have two grids on the screen at the same time.
+At the end, whichever player has the higher score wins. 
