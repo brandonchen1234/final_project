@@ -178,6 +178,18 @@ private void MultiplayerGrid() {
   }
 }
 
+private boolean border(Blocks block, int lowerx, int upperx){
+  for (PVector position: block.getPositions()){
+    if (position.x < lowerx)
+      return false;
+    if (position.x > upperx)
+      return false; 
+    if (position.y > height)
+      return false;
+  }
+  return true;
+}
+
 void keyPressed(){
   if (key == '1' && isGameRunning == false){
     mode = 1; 
