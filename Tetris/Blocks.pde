@@ -5,6 +5,8 @@ public class Blocks{
   private PVector[] currentPosition;
   private int positionIndex;
   
+  public Blocks(){}
+  
   public Blocks(color c, PVector[][] positions){
     this.c = c; 
     this.positions = positions; 
@@ -12,25 +14,21 @@ public class Blocks{
     positionIndex = 0;
   }
   
-  private PVector[] getPositions(){
+  private PVector[] getPosition(){
     return currentPosition;
-  }
-  
-  private PVector getPosition(){
-    return currentPosition[positionIndex];
   }
   
   private color getColor(){
     return c;
   }
   
-  private void Rotate(){
+  private void rotate(){
     currentPosition = positions[positionIndex++];
     if (positionIndex > 3)
       positionIndex = 0;
   }
   
-  private void Left(){
+  private void left(){
     for (int i = 0; i < positions.length; i++){
       for (int f = 0; f < positions[i].length; f++){
         positions[i][f].x -= 40;
@@ -38,7 +36,7 @@ public class Blocks{
     }
   }
   
-  private void Right(){
+  private void right(){
     for (int i = 0; i < positions.length; i++){
       for (int f = 0; f < positions[i].length; f++){
         positions[i][f].x += 40;
@@ -46,7 +44,7 @@ public class Blocks{
     }
   }
   
-  private void Down(){
+  private void down(){
     for (int i = 0; i < positions.length; i++){
       for (int f = 0; f < positions[i].length; f++){
         positions[i][f].y += 40;

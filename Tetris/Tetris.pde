@@ -1,3 +1,5 @@
+import java.io.*;
+
 //attributes 
 private int mode = 0; 
 private boolean isGameRunning = false;
@@ -82,9 +84,11 @@ void setup() {
  if (mode == 2){
    MultiplayerGrid();
    currentBlock2 = blocks[(int)random(0, 7)];
+   currentBlock2.rotate();
  }
  
  currentBlock = blocks[(int)random(0, 7)];
+ currentBlock.rotate();
 }
 
 void draw() {
@@ -97,28 +101,28 @@ void draw() {
     }
     
     if (mode == 1){
-      for (PVector position: currentBlock.getPositions()){
+      for (PVector position: currentBlock.getPosition()){
           fill(currentBlock.getColor());
           square(position.x + 600, position.y + 80, 40);
       }
     }
     
     if (mode == 2){
-      for (PVector position: currentBlock.getPositions()){
-          fill(currentBlock.getColor());
-          square(position.x + 160, position.y + 80, 40);
+      for (PVector position: currentBlock.getPosition()){
+        fill(currentBlock.getColor());
+        square(position.x + 160, position.y + 80, 40);
       }
-      for (PVector position: currentBlock2.getPositions()){
+      for (PVector position: currentBlock2.getPosition()){
         fill(currentBlock2.getColor());
         square(position.x + 960, position.y + 80, 40);
       }
     }
     
-    if (frameCount % 90 == 0){
-     currentBlock.Down();    
-     if (mode == 2)
-       currentBlock2.Down();
-    }
+    //if (frameCount % 90 == 0){
+    // currentBlock.down();    
+     //if (mode == 2)
+      // currentBlock2.down();
+  // }
   }
 }
 
@@ -178,13 +182,81 @@ private void MultiplayerGrid() {
   }
 }
 
-private boolean border(Blocks block, int lowerx, int upperx){
-  for (PVector position: block.getPositions()){
-    if (position.x < lowerx)
+private boolean rotateBorder(Blocks block, int lowerx, int upperx){
+  block.rotate();
+  PVector[] position = block.getPosition();
+  for (PVector square: position){
+    if (square.x < lowerx){
+      block.rotate();
+      block.rotate();
+      block.rotate();
       return false;
-    if (position.x > upperx)
+    }
+    if (square.x > upperx){
+      block.rotate();
+      block.rotate();
+      block.rotate();
       return false; 
-    if (position.y > height)
+    }
+    if (square.y > 960){
+      block.rotate();
+      block.rotate();
+      block.rotate();
+      return false;
+    }
+  }
+  block.rotate();
+  block.rotate();
+  block.rotate();
+  return true;
+}
+
+private boolean leftBorder(Blocks block, int lowerx, int upperx){
+  block.left();
+  PVector[] position = block.getPosition();
+  for (PVector square: position){
+    if (square.x < lowerx){
+      block.right();
+      return false;
+    }
+    if (square.x > upperx){
+      block.right();
+      return false; 
+    }
+    if (square.y > 960){
+      block.right();
+      return false;
+    }
+  }
+  block.right();
+  return true;
+}
+
+private boolean rightBorder(Blocks block, int lowerx, int upperx){
+  block.right();
+  PVector[] position = block.getPosition();
+  for (PVector square: position){
+    if (square.x < lowerx){
+      block.left();
+      return false;
+    }
+    if (square.x > upperx){
+      block.left();
+      return false; 
+    }
+    if (square.y > 960){
+      block.left();
+      return false;
+    }
+  }
+  block.left();
+  return true;
+}
+
+private boolean downBorder(Blocks block){
+  PVector[] position = block.getPosition();
+  for (PVector square: position){
+    if (square.y > 800)
       return false;
   }
   return true;
@@ -203,31 +275,45 @@ void keyPressed(){
     setup();
   }
   
-  if (key == 'w' || key == 'W' && isGameRunning == true){
-    currentBlock.Rotate();
-  }
-  if (key == 'd' || key == 'D' && isGameRunning == true){
-    currentBlock.Right();
-  }
-  if (key == 'a' || key == 'A' && isGameRunning == true){
-    currentBlock.Left();
-  }
-  if (key == 's' || key == 'S' && isGameRunning == true){
-    currentBlock.Down();
+  if (mode == 1){
+    if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, -200, 160)){
+      currentBlock.rotate();
+    }
+    if ((key == 'd' || key == 'D') && isGameRunning == true && rightBorder(currentBlock, -200, 160)){
+      currentBlock.right();
+    }
+    if ((key == 'a' || key == 'A') && isGameRunning == true && leftBorder(currentBlock, -200, 160)){
+      currentBlock.left();
+    }
+    if ((key == 's' || key == 'S') && isGameRunning == true && downBorder(currentBlock)){
+      currentBlock.down();
+    }
   }
   
   if (mode == 2){
-    if (keyCode == UP && isGameRunning == true){
-      currentBlock2.Rotate();
+    if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, -160, 200)){
+      currentBlock.rotate();
     }
-    if (keyCode == RIGHT && isGameRunning == true){
-      currentBlock2.Right();
+    if ((key == 'd' || key == 'D') && isGameRunning == true && rightBorder(currentBlock, -160, 200)){
+      currentBlock.right();
     }
-    if (keyCode == LEFT && isGameRunning == true){
-      currentBlock2.Left();
+    if ((key == 'a' || key == 'A') && isGameRunning == true && leftBorder(currentBlock, -160, 200)){
+      currentBlock.left();
     }
-    if (keyCode == DOWN && isGameRunning == true){
-      currentBlock2.Down();
+    if ((key == 's' || key == 'S') && isGameRunning == true && downBorder(currentBlock)){
+      currentBlock.down();
+    }
+    if (keyCode == UP && isGameRunning == true && rotateBorder(currentBlock2, -160, 200)){
+      currentBlock2.rotate();
+    }
+    if (keyCode == RIGHT && isGameRunning == true && rightBorder(currentBlock2, -160, 200)){
+      currentBlock2.right();
+    }
+    if (keyCode == LEFT && isGameRunning == true && leftBorder(currentBlock2, -160, 200)){
+      currentBlock2.left();
+    }
+    if (keyCode == DOWN && isGameRunning == true && downBorder(currentBlock2)){
+      currentBlock2.down();
     }
   }
 }
