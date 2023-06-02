@@ -8,6 +8,7 @@ private Blocks currentBlock2;
 private int size = 40; 
 private int x = 0;
 private int y = 0;
+private color[][] grid = new color[24][10];
 
 //square
 PVector[][] OPositions = { {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}, 
@@ -123,6 +124,16 @@ void draw() {
      //if (mode == 2)
       // currentBlock2.down();
   // }
+  if (mode == 1){
+    PVector[] position = currentBlock.getPosition();
+      for (PVector square: position){
+        if(grid[(int)square.y/40][(int)square.x/40] == 0){
+          for (PVector square1: position){
+            grid[(int)square1.y/40][(int)square1.x/40] = currentBlock.getColor();
+          }
+        }
+      }
+    }
   }
 }
 
