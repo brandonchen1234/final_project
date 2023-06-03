@@ -8,7 +8,6 @@ private Blocks currentBlock2;
 private int size = 40; 
 private int x = 0;
 private int y = 0;
-private color[][] grid = new color[24][10];
 
 //square
 PVector[][] OPositions = { {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}, 
@@ -84,12 +83,10 @@ void setup() {
  
  if (mode == 2){
    MultiplayerGrid();
-   currentBlock2 = blocks[(int)random(0, 7)];
-   currentBlock2.rotate();
+   currentBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
  }
  
- currentBlock = blocks[(int)random(0, 7)];
- currentBlock.rotate();
+ currentBlock = Blocks.copy(blocks[(int)random(0, 7)]);
 }
 
 void draw() {
@@ -103,9 +100,9 @@ void draw() {
     
     if (mode == 1){
       for (PVector position: currentBlock.getPosition()){
-          fill(currentBlock.getColor());
-          square(position.x + 600, position.y + 80, 40);
-      }
+        fill(currentBlock.getColor());
+        square(position.x + 600, position.y + 80, 40);
+     }
     }
     
     if (mode == 2){
@@ -119,18 +116,16 @@ void draw() {
       }
     }
     
-    //if (frameCount % 90 == 0){
-    // currentBlock.down();    
-     //if (mode == 2)
-      // currentBlock2.down();
-  // }
-  if (mode == 1){
-    PVector[] position = currentBlock.getPosition();
-      for (PVector square: position){
-        if(grid[(int)square.y/40][(int)square.x/40] == 0){
-          for (PVector square1: position){
-            grid[(int)square1.y/40][(int)square1.x/40] = currentBlock.getColor();
-          }
+    if (frameCount % 90 == 0){
+      currentBlock.down();    
+     if (mode == 2)
+      currentBlock2.down();
+    }
+      
+    if (mode == 1){
+      for (PVector square: currentBlock.getPosition()){
+        if (square.y > 800){
+           currentBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
         }
       }
     }
