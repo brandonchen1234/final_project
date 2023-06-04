@@ -117,18 +117,15 @@ void draw() {
       }
     }
     
-    if (frameCount % 90 == 0){
-      currentBlock.down();    
-     if (mode == 2)
-      currentBlock2.down();
-    }
+//    if (frameCount % 90 == 0){
+//      currentBlock.down();    
+//     if (mode == 2)
+//      currentBlock2.down();
+//    }
     
     if (mode == 1){
-      TetrisGrid.check(currentBlock);
-      for (PVector square: currentBlock.getPosition()){
-        if (square.y > 800){
-           currentBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
-        }
+      if (TetrisGrid.check(currentBlock) == true){
+        currentBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
       }
     }
   }
@@ -150,7 +147,7 @@ private boolean rotateBorder(Blocks block, int lowerx, int upperx){
       block.rotate();
       return false; 
     }
-    if (square.y > 960){
+    if (square.y > 800){
       block.rotate();
       block.rotate();
       block.rotate();
@@ -175,7 +172,9 @@ private boolean leftBorder(Blocks block, int lowerx, int upperx){
       block.right();
       return false; 
     }
-    if (square.y > 960){
+  }
+  if (mode == 1){
+    if (TetrisGrid.checkLeft(block) == false){
       block.right();
       return false;
     }
@@ -196,7 +195,9 @@ private boolean rightBorder(Blocks block, int lowerx, int upperx){
       block.left();
       return false; 
     }
-    if (square.y > 960){
+  }
+  if (mode == 1){
+    if (TetrisGrid.checkRight(block) == false){
       block.left();
       return false;
     }

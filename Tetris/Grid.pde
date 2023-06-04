@@ -66,13 +66,18 @@ public class Grid{
     boolean stay = false; 
         
     for (PVector square: block.getPosition()){
-      if (square.y > 800){
+      if (square.y > 800 && grid[(int)square.y / 40 + 2][(int)square.x / 40 + 4] == 0){
         stay = true;
+        for (PVector position : block.getPosition()){
+          grid[(int)position.y / 40 + 2][(int)position.x / 40 + 4] = 1;
+          colorGrid[(int)position.y / 40 + 2][(int)position.x / 40 + 4] = block.getColor();
+        }
+        return stay;
       }
     }
       
     for (PVector position : block.getPosition()){
-      if (grid[(int)position.y / 40 + 2][(int)position.x / 40 + 4] != 0){
+      if (grid[(int)position.y / 40 + 3][(int)position.x / 40 + 4] != 0){
         stay = true;
       }
     }
@@ -83,6 +88,46 @@ public class Grid{
         colorGrid[(int)position.y / 40 + 2][(int)position.x / 40 + 4] = block.getColor();
       }
     }
-  return stay; 
+    
+    boolean isThereRow = false;
+    for (int i = 23; i > 0; i--){
+      for (int f = 0; f < 10; f++){
+        if (grid[i][f] == 0){
+          isThereRow = true;
+        }
+      }
+      if (isThereRow == false){
+        for (int row = i; row > 0; row--){
+          for (int col = 0; col < 10; col++){
+            grid[row][col] = grid [row - 1][col];
+            colorGrid[row][col] = colorGrid[row - 1][col];
+          }
+        }
+      }
+      isThereRow = false;
+    }
+    return stay; 
+  }
+  
+  private boolean checkRight(Blocks block){
+    for (PVector square: block.getPosition()){
+      if ((int)square.x / 40 + 4 < 10){
+        if (grid[(int)square.y / 40 + 2][(int)square.x / 40 + 4] != 0){
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+  
+    private boolean checkLeft(Blocks block){
+    for (PVector square: block.getPosition()){
+      if ((int)square.x / 40 + 4 < 10){
+        if (grid[(int)square.y / 40 + 2][(int)square.x / 40 + 4] != 0){
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
