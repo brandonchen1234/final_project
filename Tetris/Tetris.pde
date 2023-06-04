@@ -8,6 +8,7 @@ private Blocks currentBlock2;
 private int size = 40; 
 private int x = 0;
 private int y = 0;
+private Grid TetrisGrid = new Grid();
 
 //square
 PVector[][] OPositions = { {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}, 
@@ -78,11 +79,11 @@ void setup() {
  text("PRESS 1 FOR SINGLE-PLAYER OR 2 FOR MULTIPLAYER", 10, 480); 
  
  if (mode == 1){
-   SinglePlayerGrid();
+   TetrisGrid.SinglePlayerGrid();
  }
  
  if (mode == 2){
-   MultiplayerGrid();
+   TetrisGrid.MultiplayerGrid();
    currentBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
  }
  
@@ -92,16 +93,16 @@ void setup() {
 void draw() {
   if (isGameRunning == true){
     if (mode == 1)
-      SinglePlayerGrid();
+      TetrisGrid.SinglePlayerGrid();
     
     if (mode == 2){
-      MultiplayerGrid();
+      TetrisGrid.MultiplayerGrid();
     }
     
     if (mode == 1){
       for (PVector position: currentBlock.getPosition()){
         fill(currentBlock.getColor());
-        square(position.x + 600, position.y + 80, 40);
+        square(position.x + 560, position.y + 80, 40);
      }
     }
     
@@ -121,69 +122,14 @@ void draw() {
      if (mode == 2)
       currentBlock2.down();
     }
-      
+    
     if (mode == 1){
+      TetrisGrid.check(currentBlock);
       for (PVector square: currentBlock.getPosition()){
         if (square.y > 800){
            currentBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
         }
       }
-    }
-  }
-}
-
-
-//temporary method for debugging
-
-private void SinglePlayerGrid() {
-  int x = 0;
-  int y = 0;
-  int size = 40; 
-  background(255);
-  if (y < height){
-    for (int curRow = 0; curRow < height/size; curRow++){
-      for (int curCol = 0; curCol < 10; curCol++){
-        fill(0);
-        stroke(255);
-        square(size * 10  + x, y, size); 
-        x += size;
-      }
-      x = 0;
-      y += size;
-    }
-  }
-}
-
-private void MultiplayerGrid() {
-  int x = 0;
-  int y = 0;
-  int size = 40; 
-  background(255);
-  if (y < height){
-    for (int curRow = 0; curRow < height/size; curRow++){
-      for (int curCol = 0; curCol < 10; curCol++){
-        fill(0);
-        stroke(255);
-        square(x, y, size); 
-        x += size;
-      }
-      x = 0;
-      y += size;
-    }
-  }
-  
-  x = 0; 
-  y = 0;
-  if (y < height){
-    for (int curRow = 0; curRow < height/size; curRow++){
-      for (int curCol = 0; curCol < 10; curCol++){
-        fill(0);
-        stroke(255);
-        square(size * 20 + x, y, size); 
-        x += size;
-      }
-      x = 0;
-      y += size;
     }
   }
 }
@@ -282,13 +228,13 @@ void keyPressed(){
   }
   
   if (mode == 1){
-    if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, -200, 160)){
+    if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, -160, 200)){
       currentBlock.rotate();
     }
-    if ((key == 'd' || key == 'D') && isGameRunning == true && rightBorder(currentBlock, -200, 160)){
+    if ((key == 'd' || key == 'D') && isGameRunning == true && rightBorder(currentBlock, -160, 200)){
       currentBlock.right();
     }
-    if ((key == 'a' || key == 'A') && isGameRunning == true && leftBorder(currentBlock, -200, 160)){
+    if ((key == 'a' || key == 'A') && isGameRunning == true && leftBorder(currentBlock, -160, 200)){
       currentBlock.left();
     }
     if ((key == 's' || key == 'S') && isGameRunning == true && downBorder(currentBlock)){
