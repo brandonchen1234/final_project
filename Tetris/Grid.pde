@@ -4,6 +4,7 @@ public class Grid{
   private color[][] colorGrid2 = new color[24][10];
   private int[][] grid2 = new int[24][10];
   private int score = 0;
+  private int highestScore = 0; 
   private int score2 = 0;
   
   public Grid(){
@@ -40,6 +41,8 @@ public class Grid{
     rect(20, 140, 200, 160); 
     rect(20, 300, 200, 160); 
     rect(20, 460, 200, 160); 
+    fill(0);
+    text("Highest Score: " + highestScore, 10, 700);
   }
   
   private void MultiplayerGrid() {
@@ -59,6 +62,12 @@ public class Grid{
         y += size;
       }
     }
+    fill(255);
+    stroke(0);
+    rect(440, 140, 120, 80); 
+    rect(440, 220, 120, 80); 
+    rect(440, 300, 120, 80); 
+    
     x = 0; 
     y = 0;
     if (y < height){
@@ -73,6 +82,12 @@ public class Grid{
         y += size;
       }
     }
+    fill(255);
+    stroke(0);
+    rect(440, 615, 120, 80); 
+    rect(440, 695, 120, 80); 
+    rect(440, 775, 120, 80); 
+    
     fill(0);
     rect(400, 478, 400, 4);
     textSize(52);
@@ -123,6 +138,8 @@ public class Grid{
       }
       if (isThereRow == false){
         score += 100;
+        if (score > highestScore)
+          highestScore = score; 
         for (int row = i; row > 0; row--){
           for (int col = 0; col < 10; col++){
             grid[row][col] = grid [row - 1][col];
@@ -135,7 +152,7 @@ public class Grid{
     return stay; 
   }
   
-  private boolean checkGameEnd(Blocks block){
+  private boolean checkGameEnd(){
     boolean gameEnd = false;
       for (int i = 3; i > 0; i--){
         for (int f = 0; f < 10; f++){
@@ -208,7 +225,7 @@ public class Grid{
     return stay; 
   }
   
-  private boolean checkGameEnd2(Blocks block){
+  private boolean checkGameEnd2(){
     boolean gameEnd = false;
       for (int i = 3; i > 0; i--){
         for (int f = 0; f < 10; f++){
@@ -240,6 +257,8 @@ public class Grid{
         grid2[i][f] = 0;
         colorGrid[i][f] = 0;
         colorGrid2[i][f] = 0;
+        score = 0; 
+        score2 = 0;
       }
     }
   }

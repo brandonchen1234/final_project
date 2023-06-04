@@ -15,6 +15,7 @@ private int size = 40;
 private int x = 0;
 private int y = 0;
 private Grid TetrisGrid = new Grid();
+private String playerWin; 
 
 //square
 PVector[][] OPositions = { {new PVector(x, y), new PVector(x + size, y), new PVector(x, y + size), new PVector(x + size, y + size)}, 
@@ -132,13 +133,39 @@ void draw() {
     }
     
     if (mode == 2){
+      stroke(255);
       for (PVector position: currentBlock.getPosition()){
         fill(currentBlock.getColor());
         square(position.x + 160, position.y + 80, 40);
       }
+      for (PVector position: nextBlock.getPosition()){
+       fill(nextBlock.getColor());
+       square((position.x + 1000) / 2, (position.y + 350) / 2, 20);
+      }
+      for (PVector position: nextNextBlock.getPosition()){
+       fill(nextNextBlock.getColor());
+       square((position.x + 1000) / 2, (position.y + 500) /2, 20);
+      }
+      for (PVector position: nextNextNextBlock.getPosition()){
+       fill(nextNextNextBlock.getColor());
+       square((position.x + 1000) / 2, (position.y + 650) /2, 20);
+      }
+      
       for (PVector position: currentBlock2.getPosition()){
         fill(currentBlock2.getColor());
         square(position.x + 960, position.y + 80, 40);
+      }
+      for (PVector position: nextBlock2.getPosition()){
+       fill(nextBlock2.getColor());
+       square((position.x + 1000) / 2, (position.y + 1300) / 2, 20);
+      }
+      for (PVector position: nextNextBlock2.getPosition()){
+       fill(nextNextBlock2.getColor());
+       square((position.x + 1000) / 2, (position.y + 1450) /2, 20);
+      }
+      for (PVector position: nextNextNextBlock2.getPosition()){
+       fill(nextNextNextBlock2.getColor());
+       square((position.x + 1000) / 2, (position.y + 1600) /2, 20);
       }
     }
     
@@ -155,19 +182,35 @@ void draw() {
         nextNextBlock = nextNextNextBlock;
         nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
       }
-      if (TetrisGrid.checkGameEnd(currentBlock) == true){
+      if (TetrisGrid.checkGameEnd() == true){
         reset();
       }
     }
     
     if (mode == 2){
       if (TetrisGrid.check(currentBlock) == true){
-        currentBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
+        currentBlock = nextBlock;
+        nextBlock = nextNextBlock;
+        nextNextBlock = nextNextNextBlock;
+        nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
       }
       if (TetrisGrid.check2(currentBlock2) == true){
-        currentBlock2 = Blocks.copy(blocks[(int)random(0, 7)]); 
+        currentBlock2 = nextBlock2;
+        nextBlock2 = nextNextBlock2;
+        nextNextBlock2 = nextNextNextBlock2;
+        nextNextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]); 
       }
     }
+      if (TetrisGrid.checkGameEnd() == true){
+        playerWin = "Player 2";
+        reset();
+        endScreen();
+      }
+      if (TetrisGrid.checkGameEnd2() == true){
+        playerWin = "Player 1";
+        reset();
+        endScreen();
+      }
   }
 }
 
@@ -344,4 +387,12 @@ private void reset(){
   isGameRunning = false; 
   TetrisGrid.reset();
   setup();
+}
+
+private void endScreen(){
+  background(255);
+  textSize(52);
+  text(playerWin + " wins", 440, 480);
+  textSize(30);
+  text("To play again, press 1 for single player and 2 for multiplayer", 300, 540);
 }
