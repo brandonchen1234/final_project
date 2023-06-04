@@ -4,7 +4,13 @@ import java.io.*;
 private int mode = 0; 
 private boolean isGameRunning = false;
 private Blocks currentBlock;
+private Blocks nextBlock;
+private Blocks nextNextBlock;
+private Blocks nextNextNextBlock;
 private Blocks currentBlock2;
+private Blocks nextBlock2;
+private Blocks nextNextBlock2;
+private Blocks nextNextNextBlock2;
 private int size = 40; 
 private int x = 0;
 private int y = 0;
@@ -85,9 +91,15 @@ void setup() {
  if (mode == 2){
    TetrisGrid.MultiplayerGrid();
    currentBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
+   nextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
+   nextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
+   nextNextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
  }
  
  currentBlock = Blocks.copy(blocks[(int)random(0, 7)]);
+ nextBlock = Blocks.copy(blocks[(int)random(0, 7)]);
+ nextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]);
+ nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]);
 }
 
 void draw() {
@@ -100,10 +112,23 @@ void draw() {
     }
     
     if (mode == 1){
+      stroke(255);
       for (PVector position: currentBlock.getPosition()){
         fill(currentBlock.getColor());
         square(position.x + 560, position.y + 80, 40);
-     }
+       }
+       for (PVector position: nextBlock.getPosition()){
+       fill(nextBlock.getColor());
+       square(position.x + 120, position.y + 200, 40);
+      }
+      for (PVector position: nextNextBlock.getPosition()){
+       fill(nextNextBlock.getColor());
+       square(position.x + 120, position.y + 360, 40);
+      }
+      for (PVector position: nextNextNextBlock.getPosition()){
+       fill(nextNextNextBlock.getColor());
+       square(position.x + 120, position.y + 520, 40);
+      }
     }
     
     if (mode == 2){
@@ -125,13 +150,28 @@ void draw() {
     
     if (mode == 1){
       if (TetrisGrid.check(currentBlock) == true){
+        currentBlock = nextBlock;
+        nextBlock = nextNextBlock;
+        nextNextBlock = nextNextNextBlock;
+        nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
+      }
+      if (TetrisGrid.checkGameEnd(currentBlock) == true){
+        reset();
+      }
+    }
+    
+    if (mode == 2){
+      if (TetrisGrid.check(currentBlock) == true){
         currentBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
+      }
+      if (TetrisGrid.check2(currentBlock2) == true){
+        currentBlock2 = Blocks.copy(blocks[(int)random(0, 7)]); 
       }
     }
   }
 }
 
-private boolean rotateBorder(Blocks block, int lowerx, int upperx){
+private boolean rotateBorder(Blocks block, int gridType, int lowerx, int upperx){
   block.rotate();
   PVector[] position = block.getPosition();
   for (PVector square: position){
@@ -154,13 +194,29 @@ private boolean rotateBorder(Blocks block, int lowerx, int upperx){
       return false;
     }
   }
+  if (gridType == 1){
+    if (TetrisGrid.checkSurroundings(block) == false){
+      block.rotate();
+      block.rotate();
+      block.rotate();
+      return false;
+    }
+  }
+  if (gridType == 2){
+    if (TetrisGrid.checkSurroundings2(block) == false){
+      block.rotate();
+      block.rotate();
+      block.rotate();
+      return false;
+    }
+  }
   block.rotate();
   block.rotate();
   block.rotate();
   return true;
 }
 
-private boolean leftBorder(Blocks block, int lowerx, int upperx){
+private boolean leftBorder(Blocks block, int gridType, int lowerx, int upperx){
   block.left();
   PVector[] position = block.getPosition();
   for (PVector square: position){
@@ -173,8 +229,14 @@ private boolean leftBorder(Blocks block, int lowerx, int upperx){
       return false; 
     }
   }
-  if (mode == 1){
-    if (TetrisGrid.checkLeft(block) == false){
+  if (gridType == 1){
+    if (TetrisGrid.checkSurroundings(block) == false){
+      block.right();
+      return false;
+    }
+  }
+  if (gridType == 2){
+    if (TetrisGrid.checkSurroundings2(block) == false){
       block.right();
       return false;
     }
@@ -183,7 +245,7 @@ private boolean leftBorder(Blocks block, int lowerx, int upperx){
   return true;
 }
 
-private boolean rightBorder(Blocks block, int lowerx, int upperx){
+private boolean rightBorder(Blocks block, int gridType, int lowerx, int upperx){
   block.right();
   PVector[] position = block.getPosition();
   for (PVector square: position){
@@ -196,8 +258,14 @@ private boolean rightBorder(Blocks block, int lowerx, int upperx){
       return false; 
     }
   }
-  if (mode == 1){
-    if (TetrisGrid.checkRight(block) == false){
+  if (gridType == 1){
+    if (TetrisGrid.checkSurroundings(block) == false){
+      block.left();
+      return false;
+    }
+  }
+  if (gridType == 2){
+    if (TetrisGrid.checkSurroundings2(block) == false){
       block.left();
       return false;
     }
@@ -229,13 +297,13 @@ void keyPressed(){
   }
   
   if (mode == 1){
-    if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, -160, 200)){
+    if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, 1, -160, 200)){
       currentBlock.rotate();
     }
-    if ((key == 'd' || key == 'D') && isGameRunning == true && rightBorder(currentBlock, -160, 200)){
+    if ((key == 'd' || key == 'D') && isGameRunning == true && rightBorder(currentBlock, 1, -160, 200)){
       currentBlock.right();
     }
-    if ((key == 'a' || key == 'A') && isGameRunning == true && leftBorder(currentBlock, -160, 200)){
+    if ((key == 'a' || key == 'A') && isGameRunning == true && leftBorder(currentBlock, 1, -160, 200)){
       currentBlock.left();
     }
     if ((key == 's' || key == 'S') && isGameRunning == true && downBorder(currentBlock)){
@@ -244,25 +312,25 @@ void keyPressed(){
   }
   
   if (mode == 2){
-    if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, -160, 200)){
+    if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, 1, -160, 200)){
       currentBlock.rotate();
     }
-    if ((key == 'd' || key == 'D') && isGameRunning == true && rightBorder(currentBlock, -160, 200)){
+    if ((key == 'd' || key == 'D') && isGameRunning == true && rightBorder(currentBlock, 1, -160, 200)){
       currentBlock.right();
     }
-    if ((key == 'a' || key == 'A') && isGameRunning == true && leftBorder(currentBlock, -160, 200)){
+    if ((key == 'a' || key == 'A') && isGameRunning == true && leftBorder(currentBlock, 1, -160, 200)){
       currentBlock.left();
     }
     if ((key == 's' || key == 'S') && isGameRunning == true && downBorder(currentBlock)){
       currentBlock.down();
     }
-    if (keyCode == UP && isGameRunning == true && rotateBorder(currentBlock2, -160, 200)){
+    if (keyCode == UP && isGameRunning == true && rotateBorder(currentBlock2, 2, -160, 200)){
       currentBlock2.rotate();
     }
-    if (keyCode == RIGHT && isGameRunning == true && rightBorder(currentBlock2, -160, 200)){
+    if (keyCode == RIGHT && isGameRunning == true && rightBorder(currentBlock2, 2, -160, 200)){
       currentBlock2.right();
     }
-    if (keyCode == LEFT && isGameRunning == true && leftBorder(currentBlock2, -160, 200)){
+    if (keyCode == LEFT && isGameRunning == true && leftBorder(currentBlock2, 2, -160, 200)){
       currentBlock2.left();
     }
     if (keyCode == DOWN && isGameRunning == true && downBorder(currentBlock2)){
@@ -274,5 +342,6 @@ void keyPressed(){
 private void reset(){
   mode = 0;
   isGameRunning = false; 
+  TetrisGrid.reset();
   setup();
 }
