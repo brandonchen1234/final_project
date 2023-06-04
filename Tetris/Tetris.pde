@@ -184,6 +184,7 @@ void draw() {
       }
       if (TetrisGrid.checkGameEnd() == true){
         reset();
+        endScreen();
       }
     }
     
@@ -204,12 +205,12 @@ void draw() {
       if (TetrisGrid.checkGameEnd() == true){
         playerWin = "Player 2";
         reset();
-        endScreen();
+        endScreenForMultiplayer();
       }
       if (TetrisGrid.checkGameEnd2() == true){
         playerWin = "Player 1";
         reset();
-        endScreen();
+        endScreenForMultiplayer();
       }
   }
 }
@@ -339,6 +340,10 @@ void keyPressed(){
     setup();
   }
   
+  if (key == '3' && isGameRunning == false){
+    setup();
+  }
+  
   if (mode == 1){
     if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, 1, -160, 200)){
       currentBlock.rotate();
@@ -392,7 +397,18 @@ private void reset(){
 private void endScreen(){
   background(255);
   textSize(52);
-  text(playerWin + " wins", 440, 480);
+  text("Game Over!", 440, 480);
   textSize(30);
-  text("To play again, press 1 for single player and 2 for multiplayer", 300, 540);
+  text("Highest Score: " + TetrisGrid.highestScore, 460, 530);
+  text("To play again, press 1 for single player and 2 for multiplayer", 200, 580);
+  text("To go back to the main menu, press 3", 330, 630);
+}
+
+private void endScreenForMultiplayer(){
+  background(255);
+  textSize(52);
+  text(playerWin + " wins!", 440, 480);
+  textSize(30);
+  text("To play again, press 1 for single player and 2 for multiplayer", 260, 540);
+  text("To go back to the main menu, press 3", 360, 590);
 }
