@@ -152,6 +152,21 @@ public class Grid{
     return stay; 
   }
   
+  private boolean checkBelow(Blocks block){
+    for (PVector square: block.getPosition()){
+      if (square.y > 800 && grid[(int)square.y / 40 + 2][(int)square.x / 40 + 4] == 0){
+        return true;
+      }
+    }
+      
+    for (PVector position : block.getPosition()){
+      if (grid[(int)position.y / 40 + 3][(int)position.x / 40 + 4] != 0){
+        return true;
+      }
+    }
+    return false; 
+  }
+  
   private boolean checkGameEnd(){
     boolean gameEnd = false;
       for (int i = 3; i > 0; i--){
@@ -223,6 +238,21 @@ public class Grid{
       isThereRow = false;
     }
     return stay; 
+  }
+  
+  private boolean checkBelow2(Blocks block){
+    for (PVector square: block.getPosition()){
+      if (square.y > 800 && grid2[(int)square.y / 40 + 2][(int)square.x / 40 + 4] == 0){
+        return true;
+      }
+    }
+      
+    for (PVector position : block.getPosition()){
+      if (grid2[(int)position.y / 40 + 3][(int)position.x / 40 + 4] != 0){
+        return true;
+      }
+    }
+    return false; 
   }
   
   private boolean checkGameEnd2(){

@@ -7,6 +7,7 @@ private Blocks currentBlock;
 private Blocks nextBlock;
 private Blocks nextNextBlock;
 private Blocks nextNextNextBlock;
+private Blocks outlineBlock;
 private Blocks currentBlock2;
 private Blocks nextBlock2;
 private Blocks nextNextBlock2;
@@ -101,9 +102,11 @@ void setup() {
  nextBlock = Blocks.copy(blocks[(int)random(0, 7)]);
  nextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]);
  nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]);
+ outlineBlock = Blocks.copy(currentBlock); 
 }
 
 void draw() {
+  strokeWeight(2);
   if (isGameRunning == true){
     if (mode == 1)
       TetrisGrid.SinglePlayerGrid();
@@ -113,7 +116,18 @@ void draw() {
     }
     
     if (mode == 1){
+      outlineBlock = Blocks.copy(currentBlock); 
+      while (TetrisGrid.checkBelow(outlineBlock) == false){
+        outlineBlock.down();
+      }
+      fill(0);
+      strokeWeight(4);
+      for (PVector position: outlineBlock.getPosition()){
+       stroke(outlineBlock.getColor());
+       square(position.x + 560, position.y + 80, 40);
+      }
       stroke(255);
+      strokeWeight(2);
       for (PVector position: currentBlock.getPosition()){
         fill(currentBlock.getColor());
         square(position.x + 560, position.y + 80, 40);
@@ -133,7 +147,18 @@ void draw() {
     }
     
     if (mode == 2){
+      outlineBlock = Blocks.copy(currentBlock); 
+      while (TetrisGrid.checkBelow(outlineBlock) == false){
+        outlineBlock.down();
+      }
+      fill(0);
+      strokeWeight(4);
+      for (PVector position: outlineBlock.getPosition()){
+       stroke(outlineBlock.getColor());
+       square(position.x + 160, position.y + 80, 40);
+      }
       stroke(255);
+      strokeWeight(2);
       for (PVector position: currentBlock.getPosition()){
         fill(currentBlock.getColor());
         square(position.x + 160, position.y + 80, 40);
@@ -151,6 +176,18 @@ void draw() {
        square((position.x + 1000) / 2, (position.y + 650) /2, 20);
       }
       
+      outlineBlock = Blocks.copy(currentBlock2); 
+      while (TetrisGrid.checkBelow2(outlineBlock) == false){
+        outlineBlock.down();
+      }
+      fill(0);
+      strokeWeight(4);
+      for (PVector position: outlineBlock.getPosition()){
+       stroke(outlineBlock.getColor());
+       square(position.x + 960, position.y + 80, 40);
+      }
+      stroke(255);
+      strokeWeight(2);
       for (PVector position: currentBlock2.getPosition()){
         fill(currentBlock2.getColor());
         square(position.x + 960, position.y + 80, 40);

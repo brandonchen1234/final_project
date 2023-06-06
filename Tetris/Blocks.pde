@@ -57,8 +57,8 @@ public static class Blocks{
       Blocks t = new Blocks();
       t.c = block.c;
       t.positions = copy(block.positions); 
-      t.currentPosition = t.positions[0];
       t.positionIndex = block.positionIndex; 
+      t.currentPosition = t.positions[t.positionIndex];
     return t;
   }
   
