@@ -381,6 +381,18 @@ void keyPressed(){
     setup();
   }
   
+  if ((key == 'q' || key == 'Q') && isGameRunning == true){
+      while (downBorder(currentBlock) == true) {
+        currentBlock.down();
+      }
+    }
+  
+  if ((key == 'n' || key == 'N') && isGameRunning == true){
+    while (downBorder(currentBlock2) == true){
+      currentBlock2.down();
+    }
+  }
+  
   if (mode == 1){
     if ((key == 'w' || key == 'W') && isGameRunning == true && rotateBorder(currentBlock, 1, -160, 200)){
       currentBlock.rotate();
