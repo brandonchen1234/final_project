@@ -6,6 +6,8 @@ public class Grid{
   private int score = 0;
   public int highestScore = 0; 
   private int score2 = 0;
+  private int garbage1 = 0;
+  private int garbage2 = 0;
   
   public Grid(){
     for (int i = 0; i < 24; i++){
@@ -137,6 +139,7 @@ public class Grid{
         }
       }
       if (isThereRow == false){
+        garbage2++;
         score += 100;
         if (score > highestScore)
           highestScore = score; 
@@ -148,6 +151,29 @@ public class Grid{
         }
       }
       isThereRow = false;
+    }
+    
+    while(garbage1 > 0){
+      for (int row = 0; row < 23; row++){
+        for (int col = 0; col < 10; col++){
+          grid[row][col] = grid[row + 1][col];
+          colorGrid[row][col] = colorGrid[row + 1][col];
+        }
+      }
+     for (int col = 0; col < 10; col++){
+        grid[23][col] = 0;
+        colorGrid[23][col] = color(0);
+      }
+      int randomNumber = (int)random(0,10);
+      for (int col = 0; col < randomNumber; col++){
+        grid[23][col] = 1;
+        colorGrid[23][col] = color(128,128,128);
+      }
+      for (int col = randomNumber + 1; col < 10; col++){
+        grid[23][col] = 1;
+        colorGrid[23][col] = color(128,128,128);
+      }
+      garbage1--;
     }
     return stay; 
   }
@@ -227,6 +253,7 @@ public class Grid{
         }
       }
       if (isThereRow == false){
+        garbage1++;
         score2 += 100;
         for (int row = i; row > 0; row--){
           for (int col = 0; col < 10; col++){
@@ -236,6 +263,28 @@ public class Grid{
         }
       }
       isThereRow = false;
+    }
+     while(garbage2 > 0){
+       for (int row = 0; row < 23; row++){
+         for (int col = 0; col < 10; col++){
+           grid2[row][col] = grid2[row + 1][col];
+           colorGrid2[row][col] = colorGrid2[row + 1][col];
+         }
+       }
+       for (int col = 0; col < 10; col++){
+          grid2[23][col] = 0;
+          colorGrid2[23][col] = color(0);
+        }
+      int randomNumber = (int)random(0,10);
+      for (int col = 0; col < randomNumber; col++){
+        grid2[23][col] = 1;
+        colorGrid2[23][col] = color(128,128,128);
+      }
+      for (int col = randomNumber + 1; col < 10; col++){
+        grid2[23][col] = 1;
+        colorGrid2[23][col] = color(128,128,128);
+      }
+        garbage2--;
     }
     return stay; 
   }
