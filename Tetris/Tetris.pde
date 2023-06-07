@@ -382,15 +382,23 @@ void keyPressed(){
   }
   
   if ((key == 'q' || key == 'Q') && isGameRunning == true){
-      while (downBorder(currentBlock) == true) {
+      while (TetrisGrid.check(currentBlock) == false){
         currentBlock.down();
       }
+      currentBlock = nextBlock;
+      nextBlock = nextNextBlock;
+      nextNextBlock = nextNextNextBlock;
+      nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
     }
   
   if ((key == 'n' || key == 'N') && isGameRunning == true){
-    while (downBorder(currentBlock2) == true){
+    while (TetrisGrid.check2(currentBlock2) == false){
       currentBlock2.down();
     }
+    currentBlock2 = nextBlock2;
+    nextBlock2 = nextNextBlock2;
+    nextNextBlock2 = nextNextNextBlock2;
+    nextNextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]); 
   }
   
   if (mode == 1){
