@@ -12,6 +12,8 @@ private Blocks currentBlock2;
 private Blocks nextBlock2;
 private Blocks nextNextBlock2;
 private Blocks nextNextNextBlock2;
+private Blocks heldBlock;
+private Blocks heldBlock2;
 private int size = 40; 
 private int x = 0;
 private int y = 0;
@@ -85,6 +87,10 @@ void setup() {
  textSize(52);
  textAlign(LEFT);
  text("PRESS 1 FOR SINGLE-PLAYER OR 2 FOR MULTIPLAYER", 10, 480); 
+ textSize(26);
+ text("Player 1 Controls: W to rotate, A and D for movement, S to make the block fall faster, Q to quick drop, E to hold", 10, 520); 
+ textSize(20);
+ text("Player 2 Controls: Up Arrow to rotate, Left and Right Arrow for movement, Down ARrow to make the block fall faster, N to quick drop, M to hold", 10, 560);
  
  if (mode == 1){
    TetrisGrid.SinglePlayerGrid();
@@ -399,6 +405,36 @@ void keyPressed(){
     nextBlock2 = nextNextBlock2;
     nextNextBlock2 = nextNextNextBlock2;
     nextNextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]); 
+  }
+  
+    if ((key == 'e' || key == 'E') && isGameRunning == true){
+    if (heldBlock == null) {
+      heldBlock = currentBlock;
+      currentBlock = nextBlock;
+      nextBlock = nextNextBlock;
+      nextNextBlock = nextNextNextBlock;
+      nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
+    }
+    else {
+      Blocks temp = heldBlock;
+      heldBlock = currentBlock;
+      currentBlock = temp;
+    }
+  }
+  
+    if ((key == 'm' || key == 'M') && isGameRunning == true){
+    if (heldBlock2 == null) {
+      heldBlock2 = currentBlock2;
+      currentBlock2 = nextBlock2;
+      nextBlock2 = nextNextBlock2;
+      nextNextBlock2 = nextNextNextBlock2;
+      nextNextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]); 
+    }
+    else {
+      Blocks temp = heldBlock2;
+      heldBlock2 = currentBlock2;
+      currentBlock2 = temp;
+    }
   }
   
   if (mode == 1){
