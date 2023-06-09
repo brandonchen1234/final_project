@@ -1,2 +1,2 @@
 # final_project
-Tetris is a multimillion dollar game franchise which has captivated players of all ages. This project hopes to emulate tetris, allowing for both single player and versus matches to be played using the same computer. 
+This project aims to emulate Tetris, in which blocks known as tetronimones slowly fall. The goal of the game is to either achieve some personal best score for singleplayer or to last longer than your opponent in multiplayer. This is done through a simple mechanic in which every time a row is completely filled, it’s cleared. You will gain some corresponding score based on how many rows are completely filled from the current action in single player or send some amount of “garbage” to the opponent which will fill up the opponent’s grid.
