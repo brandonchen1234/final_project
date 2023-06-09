@@ -13,7 +13,13 @@ private Blocks nextBlock2;
 private Blocks nextNextBlock2;
 private Blocks nextNextNextBlock2;
 private Blocks heldBlock;
+private Blocks heldBlockBackup;
+private boolean isBlockHeld = false;
+private boolean swapped = false;
 private Blocks heldBlock2;
+private Blocks heldBlockBackup2;
+private boolean isBlockHeld2 = false;
+private boolean swapped2 = false;
 private int size = 40; 
 private int x = 0;
 private int y = 0;
@@ -81,6 +87,7 @@ Blocks TBlock = new Blocks(color(128,0,128), Tpositions);
 Blocks[] blocks = {OBlock, LBlock, JBlock, SBlock, ZBlock, IBlock, TBlock};
 
 void setup() {
+ //setup
  size (1200,960);
  background(255);
  fill(0);
@@ -92,19 +99,24 @@ void setup() {
  textSize(20);
  text("Player 2 Controls: Up Arrow to rotate, Left and Right Arrow for movement, Down ARrow to make the block fall faster, N to quick drop, M to hold", 10, 560);
  
+ //Single Player Grid
  if (mode == 1){
    TetrisGrid.SinglePlayerGrid();
  }
  
+ //Multiplayer Grid
  if (mode == 2){
    TetrisGrid.MultiplayerGrid();
+   //Player 2 blocks
    currentBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
+   heldBlock2 = Blocks.copy(currentBlock2);
    nextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
    nextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
    nextNextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]);
  }
- 
+ //Player 1 blocks
  currentBlock = Blocks.copy(blocks[(int)random(0, 7)]);
+ heldBlock = Blocks.copy(currentBlock);
  nextBlock = Blocks.copy(blocks[(int)random(0, 7)]);
  nextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]);
  nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]);
@@ -113,6 +125,7 @@ void setup() {
 
 void draw() {
   strokeWeight(2);
+  //updates the background 
   if (isGameRunning == true){
     if (mode == 1)
       TetrisGrid.SinglePlayerGrid();
@@ -121,6 +134,7 @@ void draw() {
       TetrisGrid.MultiplayerGrid();
     }
     
+    //draws the block on the screen, including the next blocks, outline block, and hold block for single player mode 
     if (mode == 1){
       outlineBlock = Blocks.copy(currentBlock); 
       while (TetrisGrid.checkBelow(outlineBlock) == false){
@@ -138,7 +152,7 @@ void draw() {
         fill(currentBlock.getColor());
         square(position.x + 560, position.y + 80, 40);
        }
-       for (PVector position: nextBlock.getPosition()){
+      for (PVector position: nextBlock.getPosition()){
        fill(nextBlock.getColor());
        square(position.x + 120, position.y + 200, 40);
       }
@@ -150,8 +164,15 @@ void draw() {
        fill(nextNextNextBlock.getColor());
        square(position.x + 120, position.y + 520, 40);
       }
+      if(isBlockHeld == true){
+        for (PVector position: heldBlock.getPosition()){
+         fill(heldBlock.getColor());
+         square(position.x + 120, position.y + 740, 40);
+        }
+      }
     }
     
+    //draws the block on the screen, including the next blocks, outline block, and hold block for multiplayer mode 
     if (mode == 2){
       outlineBlock = Blocks.copy(currentBlock); 
       while (TetrisGrid.checkBelow(outlineBlock) == false){
@@ -180,6 +201,12 @@ void draw() {
       for (PVector position: nextNextNextBlock.getPosition()){
        fill(nextNextNextBlock.getColor());
        square((position.x + 1000) / 2, (position.y + 650) /2, 20);
+      }
+      if(isBlockHeld == true){
+        for (PVector position: heldBlock.getPosition()){
+         fill(heldBlock.getColor());
+         square((position.x + 1300) / 2, (position.y + 350) /2, 20);
+        }
       }
       
       outlineBlock = Blocks.copy(currentBlock2); 
@@ -210,17 +237,31 @@ void draw() {
        fill(nextNextNextBlock2.getColor());
        square((position.x + 1000) / 2, (position.y + 1600) /2, 20);
       }
+      if(isBlockHeld2 == true){
+        for (PVector position: heldBlock2.getPosition()){
+         fill(heldBlock2.getColor());
+         square((position.x + 1300) / 2, (position.y + 1300) /2, 20);
+        }
+      }
     }
     
+    //gravity 
 //    if (frameCount % 90 == 0){
 //      currentBlock.down();    
 //     if (mode == 2)
 //      currentBlock2.down();
 //    }
     
+    //checks if a block has hit the bottom, or another block for single player mode 
     if (mode == 1){
       if (TetrisGrid.check(currentBlock) == true){
         currentBlock = nextBlock;
+        if (isBlockHeld == false)
+          heldBlock = Blocks.copy(currentBlock);
+        if (isBlockHeld == true){
+          heldBlockBackup = Blocks.copy(currentBlock);
+          swapped = false; 
+        }
         nextBlock = nextNextBlock;
         nextNextBlock = nextNextNextBlock;
         nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
@@ -231,15 +272,28 @@ void draw() {
       }
     }
     
+    //checks if a block has hit the bottom, or another block for multiplayer mode 
     if (mode == 2){
       if (TetrisGrid.check(currentBlock) == true){
         currentBlock = nextBlock;
+        if (isBlockHeld == false)
+          heldBlock = Blocks.copy(currentBlock);
+        if (isBlockHeld == true){
+          heldBlockBackup = Blocks.copy(currentBlock);
+          swapped = false; 
+        }
         nextBlock = nextNextBlock;
         nextNextBlock = nextNextNextBlock;
         nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
       }
       if (TetrisGrid.check2(currentBlock2) == true){
         currentBlock2 = nextBlock2;
+        if (isBlockHeld2 == false)
+          heldBlock2 = Blocks.copy(currentBlock2);
+        if (isBlockHeld2 == true){
+          heldBlockBackup2 = Blocks.copy(currentBlock2);
+          swapped2 = false; 
+        }
         nextBlock2 = nextNextBlock2;
         nextNextBlock2 = nextNextNextBlock2;
         nextNextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]); 
@@ -392,6 +446,12 @@ void keyPressed(){
         currentBlock.down();
       }
       currentBlock = nextBlock;
+      if (isBlockHeld == false)
+        heldBlock = Blocks.copy(currentBlock);
+      if (isBlockHeld == true){
+        heldBlockBackup = Blocks.copy(currentBlock);
+        swapped = false; 
+      }
       nextBlock = nextNextBlock;
       nextNextBlock = nextNextNextBlock;
       nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
@@ -402,38 +462,46 @@ void keyPressed(){
       currentBlock2.down();
     }
     currentBlock2 = nextBlock2;
+    if (isBlockHeld2 == false)
+        heldBlock2 = Blocks.copy(currentBlock2);
+      if (isBlockHeld2 == true){
+        heldBlockBackup2 = Blocks.copy(currentBlock2);
+        swapped2 = false; 
+      }
     nextBlock2 = nextNextBlock2;
     nextNextBlock2 = nextNextNextBlock2;
     nextNextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]); 
   }
   
-    if ((key == 'e' || key == 'E') && isGameRunning == true){
-    if (heldBlock == null) {
-      heldBlock = currentBlock;
+  if ((key == 'e' || key == 'E') && isGameRunning == true){
+    if (isBlockHeld == false && swapped == false){
       currentBlock = nextBlock;
       nextBlock = nextNextBlock;
       nextNextBlock = nextNextNextBlock;
       nextNextNextBlock = Blocks.copy(blocks[(int)random(0, 7)]); 
+      isBlockHeld = true; 
+      swapped = true; 
     }
-    else {
-      Blocks temp = heldBlock;
-      heldBlock = currentBlock;
-      currentBlock = temp;
+    if (isBlockHeld == true && swapped == false){
+      currentBlock = heldBlock;
+      heldBlock = heldBlockBackup; 
+      swapped = true;
     }
   }
   
-    if ((key == 'm' || key == 'M') && isGameRunning == true){
-    if (heldBlock2 == null) {
-      heldBlock2 = currentBlock2;
+  if ((key == 'm' || key == 'M') && isGameRunning == true){
+    if (isBlockHeld2 == false && swapped2 == false){
       currentBlock2 = nextBlock2;
       nextBlock2 = nextNextBlock2;
       nextNextBlock2 = nextNextNextBlock2;
       nextNextNextBlock2 = Blocks.copy(blocks[(int)random(0, 7)]); 
+      isBlockHeld2 = true; 
+      swapped2 = true; 
     }
-    else {
-      Blocks temp = heldBlock2;
-      heldBlock2 = currentBlock2;
-      currentBlock2 = temp;
+    if (isBlockHeld2 == true && swapped2 == false){
+      currentBlock2 = heldBlock2;
+      heldBlock2 = heldBlockBackup2; 
+      swapped2 = true;
     }
   }
   

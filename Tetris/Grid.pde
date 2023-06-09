@@ -38,13 +38,15 @@ public class Grid{
     textSize(30);
     text("Score: " + score, 10, 40);
     text("Next Blocks: ", 10, 100);
+    text("Held Block: ", 10, 660);
     fill(255);
     stroke(0);
     rect(20, 140, 200, 160); 
     rect(20, 300, 200, 160); 
     rect(20, 460, 200, 160); 
+    rect(20, 670, 200, 160); 
     fill(0);
-    text("Highest Score: " + highestScore, 10, 700);
+    text("Highest Score: " + highestScore, 10, 900);
   }
   
   private void MultiplayerGrid() {
@@ -67,6 +69,7 @@ public class Grid{
     fill(255);
     stroke(0);
     rect(440, 140, 120, 80); 
+    rect(590, 140, 120, 80); 
     rect(440, 220, 120, 80); 
     rect(440, 300, 120, 80); 
     
@@ -89,6 +92,7 @@ public class Grid{
     rect(440, 615, 120, 80); 
     rect(440, 695, 120, 80); 
     rect(440, 775, 120, 80); 
+    rect(590, 615, 120, 80); 
     
     fill(0);
     rect(400, 478, 400, 4);
@@ -97,11 +101,13 @@ public class Grid{
     textSize(30);
     text("Score: " + score, 400, 90);
     text("Next Blocks: ", 400, 130);
+    text("Held Block: ", 590, 130);
     textSize(52);
     text("Player 2:", 500, 530);
     textSize(30);
     text("Score: " + score2, 400, 570);
     text("Next Blocks: ", 400, 610);
+    text("Held Block: ", 590, 610);
   }
   
   private boolean check(Blocks block){
