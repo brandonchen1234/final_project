@@ -246,7 +246,7 @@ void draw() {
     }
     
     //gravity 
-    if (frameCount % (90 - (TetrisGrid.score + TetrisGrid.score2)/100) == 0){
+    if (frameCount % (90 - (TetrisGrid.score + TetrisGrid.score2)/50) == 0){
       currentBlock.down();    
      if (mode == 2)
       currentBlock2.down();
