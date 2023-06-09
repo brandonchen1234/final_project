@@ -34,6 +34,8 @@ public class Grid{
         y += size;
       }
     }
+    fill(color(255, 0, 0));
+    rect(400, 155, 400, 10); 
     fill(0);
     textSize(30);
     text("Score: " + score, 10, 40);
@@ -66,6 +68,8 @@ public class Grid{
         y += size;
       }
     }
+    fill(color(255, 0, 0));
+    rect(0, 155, 400, 10); 
     fill(255);
     stroke(0);
     rect(440, 140, 120, 80); 
@@ -87,6 +91,8 @@ public class Grid{
         y += size;
       }
     }
+    fill(color(255, 0, 0));
+    rect(800, 155, 400, 10); 
     fill(255);
     stroke(0);
     rect(440, 615, 120, 80); 
