@@ -3,9 +3,9 @@ public class Grid{
   private int[][] grid = new int[24][10];
   private color[][] colorGrid2 = new color[24][10];
   private int[][] grid2 = new int[24][10];
-  private int score = 0;
+  public int score = 0;
   public int highestScore = 0; 
-  private int score2 = 0;
+  public int score2 = 0;
   private int garbage1 = 0;
   private int garbage2 = 0;
   

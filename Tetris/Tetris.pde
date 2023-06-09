@@ -246,11 +246,11 @@ void draw() {
     }
     
     //gravity 
-//    if (frameCount % 90 == 0){
-//      currentBlock.down();    
-//     if (mode == 2)
-//      currentBlock2.down();
-//    }
+    if (frameCount % (90 - (TetrisGrid.score + TetrisGrid.score)/100) == 0){
+      currentBlock.down();    
+     if (mode == 2)
+      currentBlock2.down();
+    }
     
     //checks if a block has hit the bottom, or another block for single player mode 
     if (mode == 1){
